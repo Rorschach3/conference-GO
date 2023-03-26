@@ -38,6 +38,7 @@ def api_list_conferences(request):
     return JsonResponse(
         {"conferences": conferences},
         encoder=ConferenceListEncoder,
+        safe=False
     )
 
 
