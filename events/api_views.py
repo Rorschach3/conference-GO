@@ -34,19 +34,24 @@ class ConferenceDetailEncoder(ModelEncoder):
 
 # conferences is plural
 def api_list_conferences(request):
+    response = []
     conferences = Conference.objects.all()
-    return JsonResponse(
-        {"conferences": conferences},
-        encoder=ConferenceListEncoder,
-        safe=False
-    )
+    for conference in conferences:
+        response.append(
+            {
+                "name": conference.name,
+                "href": conference.get_api_url(),
+            }
+        )
+    return JsonResponse({"conferences": response})
+
 
 
 def api_show_conference(request, id):
-    conference = Conference.objects.filter(id=id)
+    conference = Conference.objects.get(id=id)
     return JsonResponse(
         conference,
-        encoder=ConferenceDetailEncoder, 
+        encoder=ConferenceDetailEncoder,
         safe=False
     )
 
@@ -91,3 +96,18 @@ def api_show_location(request, id):
     }
     """
     return JsonResponse()
+
+
+
+
+def api_list_conferences(request):
+    response = []
+    conferences = Conference.objects.all()
+    for conference in conferences:
+        response.append(
+            {
+                "name": conference.name,
+                "href": conference.get_api_url(),
+            }
+        )
+    return JsonResponse({"conferences": response})
