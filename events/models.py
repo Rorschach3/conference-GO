@@ -50,7 +50,9 @@ class Location(models.Model):
 
 
 class Conference(models.Model):
-    # The Conference model describes a specific conference.
+    """
+    The Conference model describes a specific conference.
+    """
 
     # Has a one-to-many relationship with presentations.Presentation
     # Has a one-to-many relationship with attendees.Attendee
@@ -77,4 +79,4 @@ class Conference(models.Model):
         return self.name
 
     class Meta:
-        ordering = ("name",)  # Default ordering for Location
+        ordering = ("starts", "name")  # Default ordering for Conference
