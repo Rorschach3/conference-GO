@@ -133,7 +133,7 @@ def api_show_location(request, id):
             "name": location.name,
             "city": location.city,
             "room_count": location.room_count,
-            "created": location.crated,
+            "created": location.created,
             "updated": location.updated,
             "state": location.state,
         })
