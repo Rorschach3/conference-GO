@@ -19,7 +19,9 @@ class Attendee(models.Model):
         related_name="attendees",
         on_delete=models.CASCADE,
     )
-    def creater
+    def create_badge(self):
+        return self.
+        
     
     def __str__(self):
         return self.name
