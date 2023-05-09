@@ -20,7 +20,7 @@ class Attendee(models.Model):
         on_delete=models.CASCADE,
     )
     def create_badge(self):
-        return self.
+        return self.attendee.Badge
         
     
     def __str__(self):
