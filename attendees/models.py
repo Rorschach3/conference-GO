@@ -20,10 +20,13 @@ class Attendee(models.Model):
         on_delete=models.CASCADE,
     )
     def create_badge(self):
-        for attendees in attendee:
-            if attendees == attendee.badge:
-        return self.attendee.Badge
-        
+        try:
+            # check if attendee already has a badge
+            self.badge
+        except Badge.DoesNotExist:
+            # attendee does not have a badge, create one
+            badge = Badge.objects.create(attendee=self)
+            badge.save()
     
     def __str__(self):
         return self.name
