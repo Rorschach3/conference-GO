@@ -20,7 +20,8 @@ class Attendee(models.Model):
         on_delete=models.CASCADE,
     )
     def create_badge(self):
-        if attendees
+        for attendees in attendee:
+            if attendees == attendee.badge:
         return self.attendee.Badge
         
     
