@@ -16,14 +16,12 @@ class ConferenceDetailEncoder(ModelEncoder):
     ]
     # if the object to decode is the same class as whats in the model property, then 
     # create an empty dictionary that will hold the property names as keys and the property values as values
-    if conference.object == self.model:
+    if conference == Conference.objects
         # for each name in the properties list
         for property_name in self.properties:
-            * get the value of that property from the model instance
-            given just the property name
-            * put it into the dictionary with that property name as
-            the key
-        * return the dictionary
+            #get the value of that property from the model instance given just the property name
+            # put it into the dictionary with that property name as the key
+        # return the dictionary
 
 
 
