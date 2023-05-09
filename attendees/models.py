@@ -7,6 +7,7 @@ class Attendee(models.Model):
     The Attendee model represents someone that wants to attend
     a conference
     """
+    
 
     email = models.EmailField()
     name = models.CharField(max_length=200)
@@ -18,7 +19,8 @@ class Attendee(models.Model):
         related_name="attendees",
         on_delete=models.CASCADE,
     )
-
+    def creater
+    
     def __str__(self):
         return self.name
 
