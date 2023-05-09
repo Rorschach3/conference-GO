@@ -36,6 +36,7 @@ def api_list_presentations(request, conference_id):
     return JsonResponse({"presentations": presentations})
 
 
+
 def api_show_presentation(request, id):
     """
     Returns the details for the Presentation model specified
@@ -72,7 +73,7 @@ def api_show_presentation(request, id):
             "created": presentation.created,
             "status": presentation.status.name,
             "conference": {
-                "title": presentation.title,
+                "title": presentation.conference.name,
                 "href": presentation.get_api_url(),
             },
         }
