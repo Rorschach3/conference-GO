@@ -46,7 +46,7 @@ class Presentation(models.Model):
         related_name="presentations",
         on_delete=models.CASCADE,
     )
-       def approve(self):
+    def approve(self):
         approved_status = Status.objects.get(name='APPROVED')
         self.status = approved_status
         self.save()
