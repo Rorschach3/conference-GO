@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 
-from .models import Conference, Location
+from .models import Conference, Location, State
 
 
 def api_list_conferences(request):
@@ -79,7 +79,6 @@ def api_show_conference(request, id):
 
 
 def api_list_locations(request):
-    
     """
     Lists the location names and the link to the location.
 
@@ -135,6 +134,6 @@ def api_show_location(request, id):
             "room_count": location.room_count,
             "created": location.created,
             "updated": location.updated,
-            "state": location.state,
-
-        })
+            "state": location.state.abbreviation,
+        }
+    )
