@@ -136,4 +136,5 @@ def api_show_location(request, id):
             "created": location.created,
             "updated": location.updated,
             "state": location.state,
+
         })
