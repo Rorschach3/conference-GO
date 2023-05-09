@@ -2,6 +2,21 @@ from django.http import JsonResponse
 
 from .models import Conference, Location, State
 
+class ConferenceDetailEncoder(ModelEncoder):
+        model = Conference
+        properties = [
+        "name",
+        "description",
+        "max_presentations",
+        "max_attendees",
+        "starts",
+        "ends",
+        "created",
+        "updated",
+    ]
+
+
+
 
 def api_list_conferences(request):
     """
