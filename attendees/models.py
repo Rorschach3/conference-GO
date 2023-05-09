@@ -36,6 +36,7 @@ class Badge(models.Model):
     Badge is a Value Object and, therefore, does not have a
     direct URL to view it.
     """
+    
 
     created = models.DateTimeField(auto_now_add=True)
 
