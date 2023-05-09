@@ -72,7 +72,7 @@ def api_show_presentation(request, id):
             "created": presentation.created,
             "status": presentation.status.name,
             "conference": {
-                "name": presentation.name,
+                "title": presentation.title,
                 "href": presentation.get_api_url(),
             },
         }
