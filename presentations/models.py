@@ -55,6 +55,3 @@ class Presentation(models.Model):
 
     class Meta:
         ordering = ("title",)  # Default ordering for presentation
-        
-    def approve(self):
-        status.name="APPROVED"

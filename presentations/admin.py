@@ -5,7 +5,12 @@ from .models import Presentation, Status
 
 @admin.register(Presentation)
 class PresentationAdmin(admin.ModelAdmin):
-    pass
+    def approve(self):
+        status.name="APPROVED"
+        
+    def reject(self):
+        status.name="REJECTED"
+
 
 
 @admin.register(Status)
