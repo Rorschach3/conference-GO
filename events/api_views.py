@@ -158,6 +158,7 @@ def api_list_locations(request):
             safe=False,
         )
 
+def api_show_location(request, id):
     """
     Returns the details for the Location model specified
     by the id parameter.
@@ -174,3 +175,14 @@ def api_list_locations(request):
         "state": the two-letter abbreviation for the state,
     }
     """
+    location = Location.objects.get(id=id)
+    return JsonResponse(
+        {
+            "name": location.name,
+            "city": location.city,
+            "room_count": location.room_count,
+            "created": location.created,
+            "updated": location.updated,
+            "state": location.state.abbreviation,
+        }
+    )
