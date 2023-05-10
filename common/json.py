@@ -3,7 +3,7 @@ from json import JSONEncoder
 
 class DateEncoder(JSONEncoder):
     def default(self, o):
-        if isinstance(o, datetime):
+        if isinstance(o, self.datetime):
             return o.isoformat()
         else:
             return super().default(0)
