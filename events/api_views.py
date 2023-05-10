@@ -160,12 +160,7 @@ def api_show_location(request, id):
     """
     location = Location.objects.get(id=id)
     return JsonResponse(
-        {
-            "name": location.name,
-            "city": location.city,
-            "room_count": location.room_count,
-            "created": location.created,
-            "updated": location.updated,
-            "state": location.state.abbreviation,
-        }
+        location,
+        encoder=LocationDetailEncoder,
+        safe=False,
     )
