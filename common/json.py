@@ -11,3 +11,7 @@ class ModelEncoder(JSONEncoder):
             return d
         else:
             return super().default(o)
+        
+class DateEncoder(JSONEncoder):
+    def default(self, o):
+        if o = 
