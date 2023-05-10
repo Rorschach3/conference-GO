@@ -3,10 +3,10 @@ from json import JSONEncoder
 
 class DateEncoder(JSONEncoder):
     def default(self, o):
-        # if o is an instance of datetime
-        #    return o.isoformat()
-        # otherwise
-        #    return super().default(o)
+        if isinstance(o, datetime):
+            return o.isoformat()
+        else:
+            return super().default(o)
         
 class ModelEncoder(DateEncoder, JSONEncoder):
     def default(self, o):
