@@ -135,11 +135,13 @@ def api_list_locations(request):
 def api_list_locations(request):
     if 
     
-    else:
-    locations = Location.objects.all()
+else:
+    content = json.loads(request.body)
+    location = Location.objects.create(**content)
     return JsonResponse(
-        {"locations": locations},
-        encoder=LocationListEncoder,
+        location,
+        encoder=LocationDetailEncoder,
+        safe=False,
     )
     """
     Returns the details for the Location model specified
