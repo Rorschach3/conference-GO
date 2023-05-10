@@ -109,6 +109,7 @@ def api_list_locations(request):
     return JsonResponse({"locations": response})
 
 
+@require_http_methods(["DELETE", "GET", "PUT"])
 def api_show_location(request, id):
     """
     Returns the details for the Location model specified
@@ -128,12 +129,8 @@ def api_show_location(request, id):
     """
     location = Location.objects.get(id=id)
     return JsonResponse(
-        {
-            "name": location.name,
-            "city": location.city,
-            "room_count": location.room_count,
-            "created": location.created,
-            "updated": location.updated,
-            "state": location.state.abbreviation,
-        }
+        location,
+        encoder=LocationDetailEncoder,
+        safe=False,
     )
+    elif 
