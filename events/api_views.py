@@ -133,16 +133,26 @@ def api_list_locations(request):
     
 @require_http_methods(["GET", "POST"])
 def api_list_locations(request):
-    if 
+    if request.method == "GET":
+        locations = Location.objects.all()
+        return JsonResponse(
+            {"locations": locations},
+            encoder=LocationListEncoder,
+        )
+    else:
+        content = json.loads(request.body)
+
+        # Get the State object and put it in the content dict
+        state = State.objects.get(abbreviation=content["state"])
+        content["state"] = state
+
+        location = Location.objects.create(**content)
+        return JsonResponse(
+            location,
+            encoder=LocationDetailEncoder,
+            safe=False,
+        )
     
-else:
-    content = json.loads(request.body)
-    location = Location.objects.create(**content)
-    return JsonResponse(
-        location,
-        encoder=LocationDetailEncoder,
-        safe=False,
-    )
     """
     Returns the details for the Location model specified
     by the id parameter.
