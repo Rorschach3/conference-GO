@@ -19,6 +19,7 @@ class ConferenceDetailEncoder(ModelEncoder):
         "location": LocationListEncoder(),
     }
     
+    
 class LocationDetailEncoder(ModelEncoder):
     model = Location
     properties = [
