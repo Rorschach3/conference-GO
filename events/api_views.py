@@ -2,9 +2,15 @@ from django.http import JsonResponse
 from common.json import ModelEncoder
 from .models import Conference, Location, State
 
+
+class LocationListEncoder(ModelEncoder):
+    model = Location
+    properties = ["name"]
+    
+    
 class ConferenceDetailEncoder(ModelEncoder):
-        model = Conference
-        properties = [
+    model = Conference
+    properties = [
         "name",
         "description",
         "max_presentations",
@@ -15,8 +21,8 @@ class ConferenceDetailEncoder(ModelEncoder):
         "updated",
         "location",
     ]
-        encoders = {
-            "location": LocationListEncoder(),
+    encoders = {
+        "location": LocationListEncoder(),
     }
     # if the object to decode is the same class as whats in the model property, then 
     # create an empty dictionary that will hold the property names as keys and the property values as values
