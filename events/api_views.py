@@ -8,8 +8,13 @@ from .models import State
 =======
 import json
 from .models import Conference, Location, State
+<<<<<<< HEAD
 from 
 >>>>>>> 47268c9 (May 10, 2023, 3:21 PM)
+=======
+from django.views.decorators.http import require_http_methods
+from .api_encoders import LocationListEncoder
+>>>>>>> 3535327 (May 10, 2023, 3:32 PM)
 
 
 class LocationListEncoder(ModelEncoder):
