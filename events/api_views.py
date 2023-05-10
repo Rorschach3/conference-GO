@@ -39,6 +39,7 @@ class LocationDetailEncoder(ModelEncoder):
     ]
 
 <<<<<<< HEAD
+=======
     def get_extra_data(self, o):
         return { "state": o.state.abbreviation }
     # if the object to decode is the same class as whats in the model property, then 
@@ -55,8 +56,7 @@ class ConferenceListEncoder(ModelEncoder):
     model = Conference
     properties = ["name"]
 
-=======
->>>>>>> 34435a4 (api_show_location)
+>>>>>>> main
 def api_list_conferences(request):
     """
     Lists the conference names and the link to the conference.
@@ -116,7 +116,28 @@ def api_show_conference(request, id):
 
 
 @require_http_methods(["GET", "POST"])
+<<<<<<< HEAD
+def api_list_locations(request):
+    if request.method == "GET":
+        locations = Location.objects.all()
+        return JsonResponse(
+            {"locations": locations},
+            encoder=LocationListEncoder,
+        )
+    else: # POST request
+        content = json.loads(request.body)
+        try: 
+            # Get the State object and put it in the content dict
+            state = State.objects.get(abbreviation=content["state"])
+            content["state"] = state
+        except State.DoesNotExist:
+            return JsonResponse(
+                {"message": "Invalid state abbreviation"},
+                status=400,
+            )    
+=======
 def api_list_locations(request):    
+>>>>>>> main
     """
     Lists the location names and the link to the location.
 
@@ -135,6 +156,8 @@ def api_list_locations(request):
         ]
     }
     """
+<<<<<<< HEAD
+=======
     if request.method == "GET":
         conferences = Conference.objects.all()
         return JsonResponse(
@@ -144,6 +167,7 @@ def api_list_locations(request):
         )
     elif request.method == "POST":
         content = json.loads(request.body)
+>>>>>>> main
 
         # Get the Location object and put it in the content dict
         try:
@@ -161,6 +185,11 @@ def api_list_locations(request):
             safe=False,
         )
 
+<<<<<<< HEAD
+@require_http_methods(["DELETE", "GET", "PUT"])
+def api_show_location(request, id):
+=======
+>>>>>>> main
     """
     Returns the details for the Location model specified
     by the id parameter.
@@ -176,4 +205,31 @@ def api_list_locations(request):
         "updated": the date/time when the record was updated,
         "state": the two-letter abbreviation for the state,
     }
+<<<<<<< HEAD
     """
+    if request.method == "GET":
+        location = Location.objects.get(id=id)
+        return JsonResponse(
+            location,
+            encoder=LocationDetailEncoder,
+            safe=False,
+        )
+    elif request.method == "DELETE":
+        count, _ = Location.objects.filter(id=id).delete()
+        return JsonResponse({"deleted": count > 0})
+    else: # PUT request
+            # copied from create
+        content = json.loads(request.body)
+        try:
+            # new code
+            if "state" in content:
+                state = State.objects.get(abbreviation=content["state"])
+                content["state"] = state
+        except State.DoesNotExist:
+            return JsonResponse(
+                {"message": "Invalid state abbreviation"},
+                status=400,
+            )
+=======
+    """
+>>>>>>> main
