@@ -41,7 +41,6 @@ class LocationDetailEncoder(ModelEncoder):
         # return the dictionary
 
 class ConferenceListEncoder(ModelEncoder):
-    
     model = Conference
     properties = ["name"]
 
