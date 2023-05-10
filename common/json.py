@@ -21,10 +21,11 @@ class ModelEncoder(DateEncoder, QuerySetEncoder, JSONEncoder):
     def default(self, o):
         if isinstance(o, self.model):
             d = {}
+            if hasattr(o, "get_api_url"):
+                d["href"] = o.get_api_url()
             for property in self.properties:
                 value = getattr(o, property)
                 d[property] = value
-            return d
-        else:
-            return super().default(o)
-        
+                return d
+            else:
+                return super().default(o)
