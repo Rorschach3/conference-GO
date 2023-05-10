@@ -54,6 +54,7 @@ class ConferenceListEncoder(ModelEncoder):
     model = Conference
     properties = ["name"]
 
+
 @require_http_methods(request_method_list=["GET", "POST"])
 def api_list_conferences(request):    
     """
@@ -83,7 +84,6 @@ def api_list_conferences(request):
         )
     elif request.method == "POST":
         content = json.loads(request.body)
-
         # Get the Location object and put it in the content dict
         try:
             location = Location.objects.get(id=content["location"])
@@ -101,28 +101,28 @@ def api_list_conferences(request):
         )
 
 
-
 @require_http_methods(["GET", "POST"])
 def api_list_locations(request):
     if request.method == "GET":
         locations = Location.objects.all()
         return JsonResponse(
-            {"locations": locations},
-            encoder=LocationListEncoder,
+            {"locations": locations}, encoder=LocationListEncoder, safe=False
         )
-    else: # POST request
+    else:
         content = json.loads(request.body)
-        try: 
-            # Get the State object and put it in the content dict
-            state = State.objects.get(abbreviation=content["state"])
-            content["state"] = state
-        except State.DoesNotExist:
-            return JsonResponse(
-                {"message": "Invalid state abbreviation"},
-                status=400,
-            )    
-            
-            
+
+        # Get the State object and put it in the content dict
+        state = State.objects.get(abbreviation=content["state"])
+        content["state"] = state
+
+        location = Location.objects.create(**content)
+        return JsonResponse(
+            location,
+            encoder=LocationDetailEncoder,
+            safe=False,
+        )
+
+
 @require_http_methods(request_method_list=["GET", "PUT", "DELETE"])
 def api_show_conference(request, id):
     if request.method == "GET":
