@@ -80,6 +80,7 @@ def api_list_conferences(request):
     )
 
 
+@require_http_methods(request_method_list=["GET", "PUT", "DELETE"])
 def api_show_conference(request, id):
     """
     Returns the details for the Conference model specified
@@ -105,11 +106,29 @@ def api_show_conference(request, id):
         }
     }
     """
-    conference = Conference.objects.get(id=id)
-    return JsonResponse(
-        conference,
-        encoder=ConferenceDetailEncoder,safe=False
-    )
+    if request.method == "GET":
+        conference = Conference.objects.get(id=id)
+        return JsonResponse(
+            conference,
+            encoder=ConferenceDetailEncoder,
+            safe=False
+            )
+    elif request.method == "DELETE":
+        count, _ = Conference.objects.filter(id=id).delete()
+        return JsonResponse({"deleted": count > 0})
+    else:
+        content = json.loads(request.body)
+
+        # Get the Location object and put it in the content dict
+        try:
+            location = Location.objects.get(id=content["location"])
+            content["location"] = location
+        except Location.DoesNotExist:
+            return JsonResponse(
+                {"message": "Invalid location id"},
+                status=400,
+            )
+
 
 
 @require_http_methods(["GET", "POST"])
