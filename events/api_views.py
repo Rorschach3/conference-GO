@@ -119,7 +119,28 @@ def api_show_conference(request, id):
 
 
 @require_http_methods(["GET", "POST"])
+<<<<<<< HEAD
 def api_list_locations(request):    
+=======
+def api_list_locations(request):
+    if request.method == "GET":
+        locations = Location.objects.all()
+        return JsonResponse(
+            {"locations": locations},
+            encoder=LocationListEncoder,
+        )
+    else: # POST request
+        content = json.loads(request.body)
+        try: 
+            # Get the State object and put it in the content dict
+            state = State.objects.get(abbreviation=content["state"])
+            content["state"] = state
+        except State.DoesNotExist:
+            return JsonResponse(
+                {"message": "Invalid state abbreviation"},
+                status=400,
+            )    
+>>>>>>> 49ca173 (May 10, 2023, 3:28 PM)
     """
     Lists the location names and the link to the location.
 
@@ -138,6 +159,7 @@ def api_list_locations(request):
         ]
     }
     """
+<<<<<<< HEAD
     if request.method == "GET":
         conferences = Conference.objects.all()
         return JsonResponse(
@@ -147,6 +169,8 @@ def api_list_locations(request):
         )
     elif request.method == "POST":
         content = json.loads(request.body)
+=======
+>>>>>>> 49ca173 (May 10, 2023, 3:28 PM)
 
         # Get the Location object and put it in the content dict
         try:
@@ -181,6 +205,7 @@ def api_show_location(request, id):
         "state": the two-letter abbreviation for the state,
     }
     """
+<<<<<<< HEAD
     location = Location.objects.get(id=id)
     return JsonResponse(
         {
@@ -198,3 +223,16 @@ def api_show_location(request, id):
         count, _ = Location.objects.filter(id=id).delete()
         return JsonResponse({"deleted": count > 0})
 >>>>>>> 522efd0 (May 10, 2023, 3:23 PM)
+=======
+    if request.method == "GET":
+        location = Location.objects.get(id=id)
+        return JsonResponse(
+            location,
+            encoder=LocationDetailEncoder,
+            safe=False,
+        )
+    elif request.method == "DELETE":
+        count, _ = Location.objects.filter(id=id).delete()
+        return JsonResponse({"deleted": count > 0})
+    else: #  PUT request
+>>>>>>> 49ca173 (May 10, 2023, 3:28 PM)
