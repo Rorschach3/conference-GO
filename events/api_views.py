@@ -134,4 +134,6 @@ def api_show_location(request, id):
         encoder=LocationDetailEncoder,
         safe=False,
     )
-    elif 
+    elif request.method == "DELETE":
+        count, _ = Location.objects.filter(id=id).delete()
+        return JsonResponse({"deleted": count > 0})
