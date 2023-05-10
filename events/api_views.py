@@ -25,7 +25,8 @@ class ConferenceDetailEncoder(ModelEncoder):
 
 class ConferenceListEncoder(ModelEncoder):
     
-    
+    model = Conference
+    properties = ["name"]
 
 def api_list_conferences(request):
     """
@@ -46,16 +47,12 @@ def api_list_conferences(request):
         ]
     }
     """
-    response = []
+def api_list_conferences(request):
     conferences = Conference.objects.all()
-    for conference in conferences:
-        response.append(
-            {
-                "name": conference.name,
-                "href": conference.get_api_url(),
-            }
-        )
-    return JsonResponse({"conferences": response})
+    return JsonResponse(
+        {"conferences": conferences},
+        encoder=ConferenceListEncoder,
+    )
 
 
 def api_show_conference(request, id):
