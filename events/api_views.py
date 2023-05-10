@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from common.json import ModelEncoder
 from .models import Conference, Location, State
+import 
 
 
 class LocationListEncoder(ModelEncoder):
@@ -129,19 +130,12 @@ def api_list_locations(request):
         ]
     }
     """
-    response = []
+def api_list_locations(request):
     locations = Location.objects.all()
-    for location in locations:
-        response.append(
-                        {
-                            "name": location.name,
-                            "href": location.get_api_url(),
-                        }
-                        )
-    return JsonResponse({"locations": response})
-
-
-def api_show_location(request, id):
+    return JsonResponse(
+        {"locations": locations},
+        encoder=LocationListEncoder,
+    )
     """
     Returns the details for the Location model specified
     by the id parameter.
@@ -158,9 +152,3 @@ def api_show_location(request, id):
         "state": the two-letter abbreviation for the state,
     }
     """
-    location = Location.objects.get(id=id)
-    return JsonResponse(
-        location,
-        encoder=LocationDetailEncoder,
-        safe=False,
-    )
