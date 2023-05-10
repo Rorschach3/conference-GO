@@ -121,24 +121,10 @@ def api_list_locations(request):
                 {"message": "Invalid state abbreviation"},
                 status=400,
             )    
-    """
-    Lists the location names and the link to the location.
-
-    Returns a dictionary with a single key "locations" which
-    is a list of location names and URLS. Each entry in the list
-    is a dictionary that contains the name of the location and
-    the link to the location's information.
-
-    {
-        "locations": [
-            {
-                "name": location's name,
-                "href": URL to the location,
-            },
-            ...
-        ]
-    }
-    """
+            
+            
+@require_http_methods(request_method_list=["GET", "PUT", "DELETE"])
+def api_show_conference(request, id):
     if request.method == "GET":
         conferences = Conference.objects.all()
         return JsonResponse(
