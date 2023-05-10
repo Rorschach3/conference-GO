@@ -1,9 +1,15 @@
 from django.http import JsonResponse
+<<<<<<< HEAD
 from common.json import ModelEncoder
 from .models import Conference, Location, State
 import json
 from django.views.decorators.http import require_http_methods
 from .models import State
+=======
+import json
+from .models import Conference, Location, State
+from 
+>>>>>>> 47268c9 (May 10, 2023, 3:21 PM)
 
 
 class LocationListEncoder(ModelEncoder):
