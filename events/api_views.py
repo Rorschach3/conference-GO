@@ -145,15 +145,14 @@ def api_list_locations(request):
         content = json.loads(request.body)
 
         # Get the State object and put it in the content dict
-        state = State.objects.get(abbreviation=content["state"])
-        content["state"] = state
-
-        location = Location.objects.create(**content)
-        return JsonResponse(
-            location,
-            encoder=LocationDetailEncoder,
-            safe=False,
-        )
+try:
+    state = State.objects.get(abbreviation=content["state"])
+    content["state"] = state
+except State.DoesNotExist:
+    return JsonResponse(
+        {"message": "Invalid state abbreviation"},
+        status=400,
+    )
     
     """
     Returns the details for the Location model specified
