@@ -2,7 +2,6 @@ from django.http import JsonResponse
 import json
 from .models import Conference, Location, State
 from django.views.decorators.http import require_http_methods
-from .api_encoders import LocationListEncoder
 
 
 def api_list_conferences(request):
@@ -147,4 +146,16 @@ def api_show_location(request, id):
     elif request.method == "DELETE":
         count, _ = Location.objects.filter(id=id).delete()
         return JsonResponse({"deleted": count > 0})
-    else: #  PUT request
+    else: # PUT request
+            # copied from create
+        content = json.loads(request.body)
+        try:
+            # new code
+            if "state" in content:
+                state = State.objects.get(abbreviation=content["state"])
+                content["state"] = state
+        except State.DoesNotExist:
+            return JsonResponse(
+                {"message": "Invalid state abbreviation"},
+                status=400,
+            )
