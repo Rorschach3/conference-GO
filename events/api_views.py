@@ -73,7 +73,6 @@ def api_list_conferences(request):
         ]
     }
     """
-def api_list_conferences(request):
     conferences = Conference.objects.all()
     return JsonResponse(
         {"conferences": conferences},
@@ -113,7 +112,8 @@ def api_show_conference(request, id):
     )
 
 
-def api_list_locations(request):
+@require_http_methods(["GET", "POST"])
+def api_list_locations(request):    
     """
     Lists the location names and the link to the location.
 
@@ -132,9 +132,6 @@ def api_list_locations(request):
         ]
     }
     """
-    
-@require_http_methods(["GET", "POST"])
-def api_list_locations(request):
     if request.method == "GET":
         conferences = Conference.objects.all()
         return JsonResponse(
