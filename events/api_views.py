@@ -18,20 +18,6 @@ class ConferenceDetailEncoder(ModelEncoder):
     encoders = {
         "location": LocationListEncoder(),
     }
-    
-    
-class LocationDetailEncoder(ModelEncoder):
-    model = Location
-    properties = [
-        "name",
-        "city",
-        "room_count",
-        "created",
-        "updated",
-    ]
-
-    def get_extra_data(self, o):
-        return { "state": o.state.abbreviation }
     # if the object to decode is the same class as whats in the model property, then 
     # create an empty dictionary that will hold the property names as keys and the property values as values
 
@@ -42,6 +28,7 @@ class LocationDetailEncoder(ModelEncoder):
         # return the dictionary
 
 class ConferenceListEncoder(ModelEncoder):
+    
     model = Conference
     properties = ["name"]
 
