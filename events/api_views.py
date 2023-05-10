@@ -7,12 +7,12 @@ class ConferenceDetailEncoder(ModelEncoder):
         properties = [
         "name",
         "description",
-        "max_presentations",
-        "max_attendees",
-        "starts",
-        "ends",
-        "created",
-        "updated",
+    #  "max_presentations",
+    #  "max_attendees",
+    #  "starts",
+    #  "ends",
+    #  "created",
+    #  "updated",
     ]
     # if the object to decode is the same class as whats in the model property, then 
     # create an empty dictionary that will hold the property names as keys and the property values as values
