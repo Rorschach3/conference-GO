@@ -11,4 +11,3 @@ class ModelEncoder(JSONEncoder):
             return d
         else:
             return super().default(o)
-        pass
