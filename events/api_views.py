@@ -38,8 +38,6 @@ class LocationDetailEncoder(ModelEncoder):
         "updated",
     ]
 
-<<<<<<< HEAD
-=======
     def get_extra_data(self, o):
         return { "state": o.state.abbreviation }
     # if the object to decode is the same class as whats in the model property, then 
@@ -56,7 +54,6 @@ class ConferenceListEncoder(ModelEncoder):
     model = Conference
     properties = ["name"]
 
->>>>>>> main
 def api_list_conferences(request):
     """
     Lists the conference names and the link to the conference.
@@ -116,7 +113,6 @@ def api_show_conference(request, id):
 
 
 @require_http_methods(["GET", "POST"])
-<<<<<<< HEAD
 def api_list_locations(request):
     if request.method == "GET":
         locations = Location.objects.all()
@@ -135,9 +131,6 @@ def api_list_locations(request):
                 {"message": "Invalid state abbreviation"},
                 status=400,
             )    
-=======
-def api_list_locations(request):    
->>>>>>> main
     """
     Lists the location names and the link to the location.
 
@@ -156,8 +149,6 @@ def api_list_locations(request):
         ]
     }
     """
-<<<<<<< HEAD
-=======
     if request.method == "GET":
         conferences = Conference.objects.all()
         return JsonResponse(
@@ -167,7 +158,6 @@ def api_list_locations(request):
         )
     elif request.method == "POST":
         content = json.loads(request.body)
->>>>>>> main
 
         # Get the Location object and put it in the content dict
         try:
@@ -185,11 +175,8 @@ def api_list_locations(request):
             safe=False,
         )
 
-<<<<<<< HEAD
 @require_http_methods(["DELETE", "GET", "PUT"])
 def api_show_location(request, id):
-=======
->>>>>>> main
     """
     Returns the details for the Location model specified
     by the id parameter.
@@ -205,7 +192,6 @@ def api_show_location(request, id):
         "updated": the date/time when the record was updated,
         "state": the two-letter abbreviation for the state,
     }
-<<<<<<< HEAD
     """
     if request.method == "GET":
         location = Location.objects.get(id=id)
@@ -230,6 +216,3 @@ def api_show_location(request, id):
                 {"message": "Invalid state abbreviation"},
                 status=400,
             )
-=======
-    """
->>>>>>> main
