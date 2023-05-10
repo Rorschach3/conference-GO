@@ -3,6 +3,7 @@ from json import JSONEncoder
 
 class ModelEncoder(JSONEncoder):
     def default(self, o):
+        if isinstance(o, self.model):
         #   if the object to decode is the same class as what's in the
         #   model property, then
         #     * create an empty dictionary that will hold the property names
