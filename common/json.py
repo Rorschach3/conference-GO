@@ -14,6 +14,6 @@ class ModelEncoder(JSONEncoder):
         #         * put it into the dictionary with that property name as
         #           the key
         #     * return the dictionary
-        #   otherwise,
-        #       return super().default(o)  # From the documentation
+        else:
+            return super().default(0)
         pass
