@@ -1,10 +1,5 @@
 from django.urls import path
-from .api_views import (
-    api_list_conferences,
-    api_list_locations,
-    api_show_conference,
-    api_show_location,
-)
+from .api_views import api_list_conferences, api_list_locations, api_show_conference, api_show_location
 
 
 urlpatterns = [
