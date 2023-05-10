@@ -1,6 +1,13 @@
 from json import JSONEncoder
 
 
+class DateEncoder(JSONEncoder):
+    def default(self, o):
+        if isinstance(o, datetime):
+            return o.isoformat()
+        else:
+            return super().default(0)
+        
 class ModelEncoder(JSONEncoder):
     def default(self, o):
         if isinstance(o, self.model):
@@ -12,6 +19,3 @@ class ModelEncoder(JSONEncoder):
         else:
             return super().default(o)
         
-class DateEncoder(JSONEncoder):
-    def default(self, o):
-        if o = 
