@@ -1,8 +1,42 @@
 from django.http import JsonResponse
-import json
+from common.json import ModelEncoder
 from .models import Conference, Location, State
+import json
 from django.views.decorators.http import require_http_methods
+from .models import State
 
+
+class LocationListEncoder(ModelEncoder):
+    model = Location
+    properties = ["name"]
+    
+    
+class ConferenceDetailEncoder(ModelEncoder):
+    model = Conference
+    properties = [
+        "name",
+        "description",
+        "max_presentations",
+        "max_attendees",
+        "starts",
+        "ends",
+        "created",
+        "updated",
+        "location",
+    ]
+    encoders = {
+        "location": LocationListEncoder(),
+    }
+    
+class LocationDetailEncoder(ModelEncoder):
+    model = Location
+    properties = [
+        "name",
+        "city",
+        "room_count",
+        "created",
+        "updated",
+    ]
 
 def api_list_conferences(request):
     """
