@@ -26,6 +26,6 @@ class ModelEncoder(DateEncoder, QuerySetEncoder, JSONEncoder):
             for property in self.properties:
                 value = getattr(o, property)
                 d[property] = value
-                return d
-            else:
-                return super().default(o)
+            return d
+        else:
+            return super().default(o)
