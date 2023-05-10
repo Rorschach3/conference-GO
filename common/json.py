@@ -6,8 +6,8 @@ class ModelEncoder(JSONEncoder):
         if isinstance(o, self.model):
             d = {}
             for property in self.properties:
-                d.append(
+                d[property] = getattr(o, property)
             return d
         else:
-            return super().default(0)
+            return super().default(o)
         pass
