@@ -83,20 +83,8 @@ def api_show_conference(request, id):
     """
     conference = Conference.objects.get(id=id)
     return JsonResponse(
-        {
-            "name": conference.name,
-            "starts": conference.starts,
-            "ends": conference.ends,
-            "description": conference.description,
-            "created": conference.created,
-            "updated": conference.updated,
-            "max_presentations": conference.max_presentations,
-            "max_attendees": conference.max_attendees,
-            "location": {
-                "name": conference.location.name,
-                "href": conference.location.get_api_url(),
-            },
-        }
+        conference,
+        encoder=ConferenceDetailEncoder,safe=False
     )
 
 
