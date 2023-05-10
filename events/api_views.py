@@ -79,7 +79,25 @@ def api_show_conference(request, id):
     )
 
 
+@require_http_methods(["GET", "POST"])
 def api_list_locations(request):
+    if request.method == "GET":
+        locations = Location.objects.all()
+        return JsonResponse(
+            {"locations": locations},
+            encoder=LocationListEncoder,
+        )
+    else: # POST request
+        content = json.loads(request.body)
+        try: 
+            # Get the State object and put it in the content dict
+            state = State.objects.get(abbreviation=content["state"])
+            content["state"] = state
+        except State.DoesNotExist:
+            return JsonResponse(
+                {"message": "Invalid state abbreviation"},
+                status=400,
+            )    
     """
     Lists the location names and the link to the location.
 
@@ -98,16 +116,6 @@ def api_list_locations(request):
         ]
     }
     """
-    response = []
-    locations = Location.objects.all()
-    for location in locations:
-        response.append(
-                        {
-                            "name": location.name,
-                            "href": location.get_api_url(),
-                        }
-                        )
-    return JsonResponse({"locations": response})
 
 
 @require_http_methods(["DELETE", "GET", "PUT"])
@@ -128,12 +136,14 @@ def api_show_location(request, id):
         "state": the two-letter abbreviation for the state,
     }
     """
-    location = Location.objects.get(id=id)
-    return JsonResponse(
-        location,
-        encoder=LocationDetailEncoder,
-        safe=False,
-    )
+    if request.method == "GET":
+        location = Location.objects.get(id=id)
+        return JsonResponse(
+            location,
+            encoder=LocationDetailEncoder,
+            safe=False,
+        )
     elif request.method == "DELETE":
         count, _ = Location.objects.filter(id=id).delete()
         return JsonResponse({"deleted": count > 0})
+    else: #  PUT request
