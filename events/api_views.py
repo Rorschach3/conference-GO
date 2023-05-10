@@ -1,7 +1,8 @@
 from django.http import JsonResponse
 import json
 from .models import Conference, Location, State
-from 
+from django.views.decorators.http import require_http_methods
+from .api_encoders import LocationListEncoder
 
 
 def api_list_conferences(request):
