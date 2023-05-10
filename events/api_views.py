@@ -136,23 +136,31 @@ def api_list_locations(request):
 @require_http_methods(["GET", "POST"])
 def api_list_locations(request):
     if request.method == "GET":
-        locations = Location.objects.all()
+        conferences = Conference.objects.all()
         return JsonResponse(
-            {"locations": locations},
-            encoder=LocationListEncoder,
+            {"conferences": conferences},
+            encoder=ConferenceListEncoder,
+            safe=False
         )
-    else:
+    elif request.method == "POST":
         content = json.loads(request.body)
-        # Get the State object and put it in the content dict
+
+        # Get the Location object and put it in the content dict
         try:
-            state = State.objects.get(abbreviation=content["state"])
-            content["state"] = state
-        except State.DoesNotExist:
+            location = Location.objects.get(id=content["location"])
+            content["location"] = location
+        except Location.DoesNotExist:
             return JsonResponse(
-                {"message": "Invalid state abbreviation"},
+                {"message": "Invalid location id"},
                 status=400,
             )
-            
+        conference = Conference.objects.create(**content)
+        return JsonResponse(
+            conference,
+            encoder=ConferenceDetailEncoder,
+            safe=False,
+        )
+
     """
     Returns the details for the Location model specified
     by the id parameter.
