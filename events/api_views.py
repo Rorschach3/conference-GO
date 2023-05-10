@@ -192,3 +192,9 @@ def api_show_location(request, id):
             "state": location.state.abbreviation,
         }
     )
+<<<<<<< HEAD
+=======
+    elif request.method == "DELETE":
+        count, _ = Location.objects.filter(id=id).delete()
+        return JsonResponse({"deleted": count > 0})
+>>>>>>> 522efd0 (May 10, 2023, 3:23 PM)
