@@ -23,7 +23,9 @@ class ConferenceDetailEncoder(ModelEncoder):
             # put it into the dictionary with that property name as the key
         # return the dictionary
 
-
+class ConferenceListEncoder(ModelEncoder):
+    
+    
 
 def api_list_conferences(request):
     """
