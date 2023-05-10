@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from common.json import ModelEncoder
 from .models import Conference, Location, State
-import 
+import json
 
 
 class LocationListEncoder(ModelEncoder):
@@ -130,7 +130,12 @@ def api_list_locations(request):
         ]
     }
     """
+    
+@require_http_methods(["GET", "POST"])
 def api_list_locations(request):
+    if 
+    
+    else:
     locations = Location.objects.all()
     return JsonResponse(
         {"locations": locations},
