@@ -7,8 +7,8 @@ class ConferenceDetailEncoder(ModelEncoder):
         properties = [
         "name",
         "description",
-    #  "max_presentations",
-    #  "max_attendees",
+        "max_presentations",
+        "max_attendees",
     #  "starts",
     #  "ends",
     #  "created",
