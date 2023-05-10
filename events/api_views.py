@@ -38,6 +38,7 @@ class LocationDetailEncoder(ModelEncoder):
         "updated",
     ]
 
+<<<<<<< HEAD
     def get_extra_data(self, o):
         return { "state": o.state.abbreviation }
     # if the object to decode is the same class as whats in the model property, then 
@@ -54,6 +55,8 @@ class ConferenceListEncoder(ModelEncoder):
     model = Conference
     properties = ["name"]
 
+=======
+>>>>>>> 34435a4 (api_show_location)
 def api_list_conferences(request):
     """
     Lists the conference names and the link to the conference.
