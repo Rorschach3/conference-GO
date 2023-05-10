@@ -19,6 +19,7 @@ class QuerySetEncoder(JSONEncoder):
 
 class ModelEncoder(DateEncoder, QuerySetEncoder, JSONEncoder):
     encoders = {}
+    
     def default(self, o):
         if isinstance(o, self.model):
             d = {}
