@@ -13,6 +13,7 @@ class ConferenceDetailEncoder(ModelEncoder):
         "ends",
         "created",
         "updated",
+        "location",
     ]
     # if the object to decode is the same class as whats in the model property, then 
     # create an empty dictionary that will hold the property names as keys and the property values as values
