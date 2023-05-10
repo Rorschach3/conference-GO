@@ -8,7 +8,7 @@ class DateEncoder(JSONEncoder):
         else:
             return super().default(0)
         
-class ModelEncoder(JSONEncoder):
+class ModelEncoder(DateEncoder, JSONEncoder):
     def default(self, o):
         if isinstance(o, self.model):
             d = {}
