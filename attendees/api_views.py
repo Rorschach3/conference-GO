@@ -8,10 +8,29 @@ import json
 def api_list_attendees(request, conference_id):
     if request.method == "GET":
         return api_list_attendees(request)
-    attendees = Attendee.objects.filter(conference=conference_id)
+        attendees = Attendee.objects.filter(conference=conference_id)
+        return JsonResponse(
+            {"attendees": attendees},
+            encoder=AttendeeListEncoder,
+        )
+    else:
+        content = json.loads(request.body)
+
+        # Get the Conference object and put it in the content dict
+        try:
+            conference = Conference.objects.get(id=conference_id)
+            content["conference"] = conference
+        except Conference.DoesNotExist:
+            return JsonResponse(
+                {"message": "Invalid conference id"},
+                status=400,
+            )
+
+    attendee = Attendee.objects.create(**content)
     return JsonResponse(
-        {"attendees": attendees},
-        encoder=AttendeeListEncoder,
+        attendee,
+        encoder=AttendeeDetailEncoder,
+        safe=False,
     )
 
 
