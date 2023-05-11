@@ -19,7 +19,7 @@ def get_photo(city, state):
 
 
 def get_weather_data(city, state):
-    geocoding_url = f"https://api.openweathermap.org/data/2.5/weather?q={city},{state}&appid=YOUR_API_KEY"  # Replace YOUR_API_KEY with your OpenWeatherMap API key
+    geocoding_url = f"https://api.openweathermap.org/data/2.5/weather?q={city},{state}&appid={OPEN_WEATHER_API_KEY}"  # Replace YOUR_API_KEY with your OpenWeatherMap API key
     
     geocoding_response = requests.get(geocoding_url)
     geocoding_data = geocoding_response.json()
@@ -28,7 +28,7 @@ def get_weather_data(city, state):
         lat = geocoding_data["coord"]["lat"]
         lon = geocoding_data["coord"]["lon"]
         
-        weather_url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid=YOUR_API_KEY"  # Replace YOUR_API_KEY with your OpenWeatherMap API key
+        weather_url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={OPEN_WEATHER_API_KEY}"  # Replace YOUR_API_KEY with your OpenWeatherMap API key
         
         weather_response = requests.get(weather_url)
         weather_data = weather_response.json()
