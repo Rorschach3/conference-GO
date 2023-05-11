@@ -179,8 +179,8 @@ def api_show_location(request, id):
     elif request.method == "DELETE":
         count, _ = Location.objects.filter(id=id).delete()
         return JsonResponse({"deleted": count > 0})
-    else: # PUT request
-            # copied from create
+    else:
+        # copied from create
         content = json.loads(request.body)
         try:
             # new code
@@ -192,3 +192,14 @@ def api_show_location(request, id):
                 {"message": "Invalid state abbreviation"},
                 status=400,
             )
+
+        # new code
+        Location.objects.filter(id=id).update(**content)
+
+        # copied from get detail
+        location = Location.objects.get(id=id)
+        return JsonResponse(
+            location,
+            encoder=LocationDetailEncoder,
+            safe=False,
+        )
