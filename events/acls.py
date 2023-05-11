@@ -1,8 +1,9 @@
 import requests
+from .keys import OPEN_WEATHER_API_KEY, PEXELS_API_KEY
 
 def get_photo(city, state):
     headers = {
-        "Authorization": "Bearer {PEXELS_API_KEY}" 
+        "Authorization": f"Bearer {PEXELS_API_KEY}" 
     }
     url = f"https://api.pexels.com/v1/search?query={city} {state} skyline&per_page=1"
     
