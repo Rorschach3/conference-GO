@@ -4,35 +4,11 @@ from .models import Attendee
 
 
 def api_list_attendees(request, conference_id):
-    """
-    Lists the attendees names and the link to the attendee
-    for the specified conference id.
-
-    Returns a dictionary with a single key "attendees" which
-    is a list of attendee names and URLS. Each entry in the list
-    is a dictionary that contains the name of the attendee and
-    the link to the attendee's information.
-
-    {
-        "attendees": [
-            {
-                "name": attendee's name,
-                "href": URL to the attendee,
-            },
-            ...
-        ]
-    }
-    """
-    response = []
-    attendees = Attendee.objects.all()
-    for attendee in attendees:
-        response.append(
-            {
-                "name": attendee.name,
-                "href": attendee.get_api_url(),
-                },
-        )
-    return JsonResponse({"attendees": response})
+    attendees = Attendee.objects.filter(conference=conference_id)
+    return JsonResponse(
+        {"attendees": attendees},
+        encoder=AttendeeListEncoder,
+    )
 
 
 def api_show_attendee(request, id):
