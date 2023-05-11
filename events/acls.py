@@ -2,7 +2,7 @@ import requests
 
 def get_photo(city, state):
     headers = {
-        "Authorization": "Bearer YOUR_API_KEY"  # Replace YOUR_API_KEY with your Pexels API key
+        "Authorization": "Bearer PEXELS_API_KEY"  # Replace YOUR_API_KEY with your Pexels API key
     }
     url = f"https://api.pexels.com/v1/search?query={city} {state} skyline&per_page=1"
     
