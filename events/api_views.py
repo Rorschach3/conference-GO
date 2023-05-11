@@ -130,7 +130,7 @@ def api_list_locations(request):
 @require_http_methods(request_method_list=["GET", "PUT", "DELETE"])
 def api_show_conference(request, id):
     if request.method == "GET":
-        conferences = Conference.objects.all()
+        conference = Conference.objects.get(id=id)
         return JsonResponse(
             {"conferences": conferences},
             encoder=ConferenceListEncoder,
