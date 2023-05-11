@@ -131,7 +131,7 @@ def api_list_locations(request):
 def api_show_conference(request, id):
     if request.method == "GET":
         conference = Conference.objects.get(id=id)
-        get_weather_data()
+        get_weather_data(conference.location)
         
         return JsonResponse(
             {"conferences": conferences},
