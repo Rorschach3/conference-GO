@@ -90,7 +90,7 @@ def api_list_conferences(request):
             content["location"] = location
         except Location.DoesNotExist:
             return JsonResponse(
-                {"message": "Invalid location id"},
+                {"message": "Invalid location id little cowgirl!"},
                 status=400,
             )
         conference = Conference.objects.create(**content)
