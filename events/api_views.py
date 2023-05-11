@@ -189,7 +189,7 @@ def api_show_location(request, id):
                 content["state"] = state
         except State.DoesNotExist:
             return JsonResponse(
-                {"message": "Invalid state abbreviation"},
+                {"message": "Invalid state abbreviation...bad little cowgirl!"},
                 status=400,
             )
 
