@@ -110,10 +110,14 @@ def api_list_locations(request):
         )
     else:
         content = json.loads(request.body)
-
-        # Get the State object and put it in the content dict
-        state = State.objects.get(abbreviation=content["state"])
-        content["state"] = state
+        try:
+            state = State.objects.get(abbreviation=content["state"])
+            content["state"] = state
+        except State.DoesNotExist:
+            return JsonResponse(
+                {"message": "Invalid state abbreviation you little cowgirl!"},
+                status=400,
+            )
 
         location = Location.objects.create(**content)
         return JsonResponse(
