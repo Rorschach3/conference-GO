@@ -1,9 +1,13 @@
 from django.http import JsonResponse
-
+from common.json import ModelEncoder
 from .models import Attendee
+from django.views.decorators.http import require_http_methods
+import json
 
-
+@require_http_methods(request_method_list=["GET", "POST"])
 def api_list_attendees(request, conference_id):
+    if request.method == "GET":
+        return api_list_attendees(request)
     attendees = Attendee.objects.filter(conference=conference_id)
     return JsonResponse(
         {"attendees": attendees},
