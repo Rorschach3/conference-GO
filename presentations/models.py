@@ -1,6 +1,5 @@
-from django.http import JsonResponse
-
-from .models import Presentation
+from django.db import models
+from django.urls import reverse
 
 
 def api_list_presentations(request, conference_id):

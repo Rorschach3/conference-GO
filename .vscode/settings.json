@@ -1,6 +1,12 @@
 {
-  "python.formatting.provider": "black",
+  "python.formatting.provider": "none",
   "python.linting.flake8Enabled": true,
   "python.linting.enabled": true,
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "terminal.integrated.allowChords": true,
+  "terminal.integrated.sendKeybindingsToShell": true,
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.python"
+  },
+  "ecl.launchConfiguration": "not found"
 }

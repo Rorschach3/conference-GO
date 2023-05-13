@@ -2,6 +2,7 @@ from django.http import JsonResponse
 from common.json import ModelEncoder
 from .models import Presentation
 
+
 class PresentationDetailEncoder(ModelEncoder):
     model = Presentation
     properties = [
@@ -45,7 +46,6 @@ def api_list_presentations(request, conference_id):
         for p in Presentation.objects.filter(conference=conference_id)
     ]
     return JsonResponse({"presentations": presentations})
-
 
 
 def api_show_presentation(request, id):
