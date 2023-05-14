@@ -2,62 +2,56 @@ from django.db import models
 from django.urls import reverse
 
 
-def api_list_presentations(request, conference_id):
+class Status(models.Model):
     """
-    Lists the presentation titles and the link to the
-    presentation for the specified conference id.
+    The Status model provides a status to a Presentation, which
+    can be SUBMITTED, APPROVED, or REJECTED.
 
-    Returns a dictionary with a single key "presentations"
-    which is a list of presentation titles and URLS. Each
-    entry in the list is a dictionary that contains the
-    title of the presentation, the name of its status, and
-    the link to the presentation's information.
-
-    {
-        "presentations": [
-            {
-                "title": presentation's title,
-                "status": presentation's status name
-                "href": URL to the presentation,
-            },
-            ...
-        ]
-    }
+    Status is a Value Object and, therefore, does not have a
+    direct URL to view it.
     """
-    presentations = [
-        {
-            "title": p.title,
-            "status": p.status.name,
-            "href": p.get_api_url(),
-        }
-        for p in Presentation.objects.filter(conference=conference_id)
-    ]
-    return JsonResponse({"presentations": presentations})
+
+    name = models.CharField(max_length=10)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ("id",)  # Default ordering for Status
+        verbose_name_plural = "statuses"  # Fix the pluralization
 
 
-def api_show_presentation(request, id):
+class Presentation(models.Model):
     """
-    Returns the details for the Presentation model specified
-    by the id parameter.
-
-    This should return a dictionary with the presenter's name,
-    their company name, the presenter's email, the title of
-    the presentation, the synopsis of the presentation, when
-    the presentation record was created, its status name, and
-    a dictionary that has the conference name and its URL
-
-    {
-        "presenter_name": the name of the presenter,
-        "company_name": the name of the presenter's company,
-        "presenter_email": the email address of the presenter,
-        "title": the title of the presentation,
-        "synopsis": the synopsis for the presentation,
-        "created": the date/time when the record was created,
-        "status": the name of the status for the presentation,
-        "conference": {
-            "name": the name of the conference,
-            "href": the URL to the conference,
-        }
-    }
+    The Presentation model represents a presentation that a person
+    wants to give at the conference.
     """
-    return JsonResponse({})
+
+    presenter_name = models.CharField(max_length=150)
+    company_name = models.CharField(max_length=150, null=True, blank=True)
+    presenter_email = models.EmailField()
+
+    title = models.CharField(max_length=200)
+    synopsis = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+
+    status = models.ForeignKey(
+        Status,
+        related_name="presentations",
+        on_delete=models.PROTECT,
+    )
+
+    conference = models.ForeignKey(
+        "events.Conference",
+        related_name="presentations",
+        on_delete=models.CASCADE,
+    )
+
+    def get_api_url(self):
+        return reverse("api_show_presentation", kwargs={"id": self.id})
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        ordering = ("title",)  # Default ordering for presentation

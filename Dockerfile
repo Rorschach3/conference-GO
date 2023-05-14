@@ -20,4 +20,4 @@ COPY manage.py manage.py
 RUN pip install -r requirements.txt
 
 # Set the command to run the application
-CMD gunicorn conference_go.wsgi
+CMD gunicorn --bind 0.0.0.0:8000 conference_go.wsgi
